@@ -8,8 +8,12 @@ const Register = () => {
   };
   return (
     <Container>
-      <h1 className="text-white">Register</h1>
-      <AccountForm onClickButton={handleRegister} buttonText="Register" />
+      <h1 className="text-white text-center">Register</h1>
+      <AccountForm
+        onClickButton={handleRegister}
+        buttonText="Register"
+        redirectPath="/login"
+      />
     </Container>
   );
 };

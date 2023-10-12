@@ -11,6 +11,7 @@ const Login = () => {
       .then((res) => {
         const token = res.data.token;
         localStorage.setItem("token", token);
+        localStorage.setItem("username", username);
         setAuthToken(token);
         console.log(token);
         return true;
@@ -21,20 +22,16 @@ const Login = () => {
       });
   };
 
-  if (hasJWT()) {
-    return (
-      <Container className="d-block align-middle">
-        <h1 className="text-white">Login</h1>
-        <AccountForm onClickButton={handleLogin} buttonText="Login" />
-      </Container>
-    );
-  } else {
-    return (
-      <Container>
-        <h1>You are logged in</h1>
-      </Container>
-    );
-  }
+  return (
+    <Container className="d-block align-middle">
+      <h1 className="text-white text-center">Login</h1>
+      <AccountForm
+        onClickButton={handleLogin}
+        buttonText="Login"
+        redirectPath="/jobs"
+      />
+    </Container>
+  );
 };
 
 export default Login;

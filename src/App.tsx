@@ -1,9 +1,9 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import logo from "./logo.svg";
 import DefaultTemplate from "./components/DefaultTemplate";
 import "./App.css";
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
-import { Home, Login, Register } from "./pages";
+import { Home, JobPortal, Login, Register } from "./pages";
 
 function App() {
   return (
@@ -14,6 +14,7 @@ function App() {
             <Route path="/" Component={Home} />
             <Route path="/login" Component={Login} />
             <Route path="/register" Component={Register} />
+            <Route path="/jobs" Component={JobPortal} />
           </Routes>
         </Router>
       </DefaultTemplate>

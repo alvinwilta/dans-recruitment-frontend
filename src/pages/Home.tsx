@@ -1,6 +1,11 @@
 import { Button, Container } from "react-bootstrap";
+import { Navigate } from "react-router-dom";
 
 const Home = () => {
+  const token = localStorage.getItem("token");
+  if (token) {
+    return <Navigate to="/jobs" />;
+  }
   return (
     <Container className="d-flex justify-content-center align-items-center">
       <div className="text-center">

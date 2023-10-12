@@ -4,10 +4,15 @@ import { Button, Container, Form, InputGroup } from "react-bootstrap";
 
 interface LoginFormProps {
   buttonText: string;
+  redirectPath: string;
   onClickButton: (username: string, password: string) => Promise<boolean>;
 }
 
-const AccountForm = ({ buttonText, onClickButton }: LoginFormProps) => {
+const AccountForm = ({
+  buttonText,
+  redirectPath,
+  onClickButton,
+}: LoginFormProps) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -18,11 +23,7 @@ const AccountForm = ({ buttonText, onClickButton }: LoginFormProps) => {
   };
   const handleButtonClick = async () => {
     const success = await onClickButton(username, password);
-    if (success) {
-      console.log("ok");
-      return;
-    }
-    console.log("n");
+    window.location.href = redirectPath;
   };
 
   return (
