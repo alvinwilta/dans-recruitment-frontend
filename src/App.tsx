@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from "react";
-import logo from "./logo.svg";
 import DefaultTemplate from "./components/DefaultTemplate";
 import "./App.css";
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import { Home, JobPortal, Login, Register } from "./pages";
+import JobDetail from "./components/JobDetail";
 
 function App() {
   return (
@@ -11,10 +10,11 @@ function App() {
       <DefaultTemplate>
         <Router>
           <Routes>
-            <Route path="/" Component={Home} />
-            <Route path="/login" Component={Login} />
-            <Route path="/register" Component={Register} />
-            <Route path="/jobs" Component={JobPortal} />
+            <Route path="/" element={<Home />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/jobs" element={<JobPortal />} />
+            <Route path="/jobs/:id" element={<JobDetail />} />
           </Routes>
         </Router>
       </DefaultTemplate>

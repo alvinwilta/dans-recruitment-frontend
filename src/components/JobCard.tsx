@@ -1,5 +1,6 @@
 import { Button, Card, Container } from "react-bootstrap";
 import { JobShort } from "../types/jobs";
+import { Link } from "react-router-dom";
 
 const JobCard = (job: JobShort) => {
   const handleDetailClick = () => {
@@ -15,9 +16,11 @@ const JobCard = (job: JobShort) => {
         <Card.Text>
           {job.type} - {job.created_at}
         </Card.Text>
-        <Button variant="primary" onClick={handleDetailClick}>
-          Details
-        </Button>
+        <Link to={`/jobs/${job.id}`}>
+          <Button variant="primary" onClick={handleDetailClick}>
+            Details
+          </Button>
+        </Link>
       </Card.Body>
     </Card>
   );
