@@ -13,7 +13,6 @@ const Login = () => {
         localStorage.setItem("token", token);
         localStorage.setItem("username", username);
         setAuthToken(token);
-        console.log(token);
         return true;
       })
       .catch((err) => {

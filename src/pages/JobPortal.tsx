@@ -18,28 +18,6 @@ const JobPortal = () => {
     <Container>
       <h1 className="text-white text-center">Job Portal</h1>
       <JobSearchBar />
-      <JobCard
-        id={"a"}
-        type={"b"}
-        url={"x"}
-        created_at={"c"}
-        company={"d"}
-        company_url={"e"}
-        location={"f"}
-        title={"g"}
-        company_logo={"h"}
-      />
-      <JobCard
-        id={"a"}
-        type={"b"}
-        url={"x"}
-        created_at={"c"}
-        company={"d"}
-        company_url={"e"}
-        location={"f"}
-        title={"g"}
-        company_logo={"h"}
-      />
     </Container>
   );
 };
