@@ -35,7 +35,7 @@ const Header = () => {
       className="bg-body-tertiary"
     >
       <Container>
-        <Navbar.Brand href="/">Dans Search</Navbar.Brand>
+        <Navbar.Brand href="/">Super Simple Job Portal</Navbar.Brand>
         <Navbar.Collapse className="justify-content-end">
           <Nav>
             {userInfo()}

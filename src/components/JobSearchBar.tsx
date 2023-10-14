@@ -1,5 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { Button, Container, Pagination, Spinner } from "react-bootstrap";
+import {
+  Button,
+  Col,
+  Container,
+  Pagination,
+  Row,
+  Spinner,
+} from "react-bootstrap";
 import Form from "react-bootstrap/Form";
 import { axios } from "../lib";
 import { setAuthToken } from "../lib/axios";
@@ -19,6 +26,7 @@ function JobSearchBar() {
   const [jobList, setJobList] = useState(emptyJobList);
 
   const handleSearch = async (page: number) => {
+    setCurrentPage(1);
     setLoading(true);
     const token = localStorage.getItem("token");
     if (!token) {
@@ -61,6 +69,12 @@ function JobSearchBar() {
           </Spinner>
         </Container>
       );
+    } else if (jobList.length == 0) {
+      return (
+        <Container className="text-white text-center">
+          No jobs found for that query.
+        </Container>
+      );
     }
     return (
       <Container style={{ height: "50vh" }}>
@@ -89,24 +103,30 @@ function JobSearchBar() {
   return (
     <Container>
       <Form className="text-white">
-        <Form.Group controlId="search">
-          <Form.Label>Job Description</Form.Label>
-          <Form.Control
-            type="text"
-            placeholder="Enter job description"
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-          />
-        </Form.Group>
-        <Form.Group controlId="location">
-          <Form.Label>Location</Form.Label>
-          <Form.Control
-            type="text"
-            placeholder="Enter location"
-            value={location}
-            onChange={(e) => setLocation(e.target.value)}
-          />
-        </Form.Group>
+        <Row className="mt-2 mb-3">
+          <Col>
+            <Form.Group controlId="search">
+              <Form.Label>Job Description</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Enter job description"
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+              />
+            </Form.Group>
+          </Col>
+          <Col>
+            <Form.Group controlId="location">
+              <Form.Label>Location</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Enter location"
+                value={location}
+                onChange={(e) => setLocation(e.target.value)}
+              />
+            </Form.Group>
+          </Col>
+        </Row>
         <Form.Group controlId="fullTime">
           <Form.Check
             type="checkbox"
@@ -115,12 +135,12 @@ function JobSearchBar() {
             onChange={(e) => setFullTime(e.target.checked)}
           />
         </Form.Group>
-        <Button variant="primary" onClick={() => handleSearch(1)}>
+        <Button variant="primary mt-3" onClick={() => handleSearch(1)}>
           Search
         </Button>
       </Form>
-      <Container className="align-top">{showJobList()}</Container>
-      <Container className="justify-content-center">
+      <Container className="align-top mt-2">{showJobList()}</Container>
+      <Container className="justify-content-center align-items-center text-center d-flex">
         <JobPagination
           current={currentPage}
           total={totalPage}

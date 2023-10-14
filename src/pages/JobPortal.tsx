@@ -12,7 +12,7 @@ const JobPortal = () => {
   }
   return (
     <Container>
-      <h1 className="text-white text-center">Job Portal</h1>
+      <h1 className="text-white text-center mt-4">Job Portal</h1>
       <JobSearchBar />
     </Container>
   );
