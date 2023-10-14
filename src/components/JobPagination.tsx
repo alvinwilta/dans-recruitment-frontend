@@ -4,7 +4,7 @@ import { Container } from "react-bootstrap";
 interface PaginationProps {
   current: number;
   total: number;
-  onChangePage: (page: number) => {};
+  onChangePage: (page: number) => void;
 }
 
 const JobPagination = (prop: PaginationProps) => {
@@ -14,15 +14,16 @@ const JobPagination = (prop: PaginationProps) => {
       <Pagination.Item
         className="text-white"
         key={page}
-        data-page={page}
         active={page === prop.current}
-        onClick={() => prop.onChangePage(page)}
+        onClick={() => {
+          prop.onChangePage(page);
+        }}
       >
         {page}
       </Pagination.Item>
     );
   }
-  return <Container>{items}</Container>;
+  return <Pagination className="text-center">{items}</Pagination>;
 };
 
 export default JobPagination;

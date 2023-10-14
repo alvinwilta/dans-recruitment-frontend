@@ -6,10 +6,6 @@ import JobCard from "../components/JobCard";
 import JobSearchBar from "../components/JobSearchBar";
 
 const JobPortal = () => {
-  const handleJobPortal = async () => {
-    return false;
-  };
-
   const token = localStorage.getItem("token");
   if (!token) {
     return <Navigate to="/login" />;

@@ -43,7 +43,7 @@ const JobDetail = () => {
 
   useEffect(() => {
     fetchData();
-  });
+  }, []);
   return (
     <Container className="text-white">
       <h1>{jobDetail.title}</h1>

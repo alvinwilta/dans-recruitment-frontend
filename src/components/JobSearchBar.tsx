@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { Button, Container, Pagination } from "react-bootstrap";
+import { Button, Container, Pagination, Spinner } from "react-bootstrap";
 import Form from "react-bootstrap/Form";
 import { axios } from "../lib";
 import { setAuthToken } from "../lib/axios";
 import { Job, JobShort } from "../types/jobs";
 import JobCard from "./JobCard";
 import JobPagination from "./JobPagination";
+import { start } from "repl";
 
 function JobSearchBar() {
   const [search, setSearch] = useState("");
@@ -13,16 +14,12 @@ function JobSearchBar() {
   const [fullTime, setFullTime] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPage, setTotalPage] = useState(1);
+  const [isLoading, setLoading] = useState(true);
   let emptyJobList: JobShort[] = [];
   const [jobList, setJobList] = useState(emptyJobList);
 
-  // Calculate the start and end index for the current page
-  const startIndex = currentPage * 5;
-  const endIndex = startIndex + 5;
-
-  const currentJobs = jobList.slice(startIndex, endIndex);
-
-  const handleSearch = async () => {
+  const handleSearch = async (page: number) => {
+    setLoading(true);
     const token = localStorage.getItem("token");
     if (!token) {
       throw new Error("no token");
@@ -33,7 +30,7 @@ function JobSearchBar() {
           Authorization: `Bearer ${token}`,
         },
         params: {
-          page: currentPage,
+          page: page,
           limit: 5,
           search: search,
           location: location,
@@ -43,18 +40,51 @@ function JobSearchBar() {
       .then((res) => {
         setJobList(res.data.data);
         setTotalPage(res.data.total);
-        console.log("response", res.data.data);
+        setLoading(false);
       })
       .catch((err) => {
         console.log(err);
       });
   };
 
-  const handleChangePage = (page: number) => [setCurrentPage(page)];
+  const handleChangePage = (page: number) => {
+    setCurrentPage(page);
+    handleSearch(page);
+  };
+
+  const showJobList = () => {
+    if (isLoading) {
+      return (
+        <Container className="text-center" style={{ height: "50vh" }}>
+          <Spinner variant="light" animation="border" role="status">
+            <span className="visually-hidden">Loading...</span>
+          </Spinner>
+        </Container>
+      );
+    }
+    return (
+      <Container style={{ height: "50vh" }}>
+        {jobList.map((job) => (
+          <JobCard
+            key={job.id}
+            id={job.id}
+            type={job.type}
+            url={job.url}
+            created_at={job.created_at}
+            company={job.company}
+            company_url={job.company_url}
+            location={job.location}
+            title={job.title}
+            company_logo={job.company_logo}
+          />
+        ))}
+      </Container>
+    );
+  };
 
   useEffect(() => {
-    handleSearch();
-  });
+    handleSearch(1);
+  }, []);
 
   return (
     <Container>
@@ -85,30 +115,18 @@ function JobSearchBar() {
             onChange={(e) => setFullTime(e.target.checked)}
           />
         </Form.Group>
-        <Button variant="primary" onClick={handleSearch}>
+        <Button variant="primary" onClick={() => handleSearch(1)}>
           Search
         </Button>
       </Form>
-      <Container className="align-top">
-        {jobList.map((job) => (
-          <JobCard
-            id={job.id}
-            type={job.type}
-            url={job.url}
-            created_at={job.created_at}
-            company={job.company}
-            company_url={job.company_url}
-            location={job.location}
-            title={job.title}
-            company_logo={job.company_logo}
-          />
-        ))}
+      <Container className="align-top">{showJobList()}</Container>
+      <Container className="justify-content-center">
+        <JobPagination
+          current={currentPage}
+          total={totalPage}
+          onChangePage={handleChangePage}
+        />
       </Container>
-      <JobPagination
-        current={currentPage}
-        total={totalPage}
-        onChangePage={handleChangePage}
-      />
     </Container>
   );
 }
