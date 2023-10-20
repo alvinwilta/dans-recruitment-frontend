@@ -25,7 +25,7 @@ const Register = () => {
       >
         <Card.Body>
           <Card.Header>
-            <h2 className="fw-bold">Login</h2>
+            <h2 className="fw-bold">Register</h2>
           </Card.Header>
           <Container style={{ marginBottom: "5vh" }}>
             <AccountForm
