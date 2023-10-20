@@ -56,8 +56,8 @@ function JobSearchBar() {
   };
 
   const handleChangePage = (page: number) => {
-    setCurrentPage(page);
     handleSearch(page);
+    setCurrentPage(page);
   };
 
   const showJobList = () => {
